@@ -1,7 +1,5 @@
 package datastructures.lists;
-
 import datastructures.interfaces.List;
-
 import java.util.Arrays;
 
 public class CustomArrayList<T> implements List<T> {
@@ -19,6 +17,85 @@ public class CustomArrayList<T> implements List<T> {
         }
     }
 
-    // TODO: Override and fill the methods to complete the data structure
+    @Override
+    public T get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        else {
+            return (T) elements[index];
+        }
+    }
+    @Override
+    public T set(int index, T element) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        else {
+            T old = (T) elements[index];
+            elements[index] = element;
+            return old;
+        }
+    }
 
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        if (size == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean add(Object o) {
+        if (o == null) {
+            throw new NullPointerException();
+        }
+        else{
+            ensureCapacity();
+            elements[size] = o;
+            size++;
+            return true;
+        }
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        if (o == null) {
+            throw new NullPointerException();
+        }
+        else {
+            for (int i = 0; i < size; i++) {
+                if (elements[i].equals(o)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        if (o == null) {
+            throw new NullPointerException();
+        }
+        else {
+            for (int i = 0; i < size; i++) {
+                if (elements[i].equals(o)) {
+                    System.arraycopy(elements, i+1, elements, i, size-i-1);
+                    elements[i] = null;
+                    size--;
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 }

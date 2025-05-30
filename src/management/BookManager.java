@@ -1,47 +1,75 @@
 package management;
-
+import datastructures.maps.CustomHashMap;
 import library.Book;
 import library.Member;
 
 public class BookManager {
-    // TODO: Define a data structure that stores ISBNs and their matching Book objects
 
+    private CustomHashMap<String, Book> booksMap;
     private MemberManager memberManager;
 
     public BookManager(MemberManager memberManager) {
-        // TODO: Initialize your data structure here
+
+        this.booksMap = new CustomHashMap<>();
         this.memberManager = memberManager;
     }
 
     public void addBook(Book book) {
-        // TODO: Add the book and its ISBN to your data structure
+        if (book == null) {
+            throw new IllegalArgumentException();
+        }
+        String isbn = book.getIsbn();
+        if (booksMap.containsKey(isbn)) {
+            throw new IllegalArgumentException();
+        }
+        booksMap.put(isbn, book);
     }
 
     public Book getBookByIsbn(String isbn) {
-        // TODO
-        return null;
+        return booksMap.get(isbn);
     }
 
     public boolean isBookAvailable(String isbn) {
-        // TODO
-        return false;
+        Book book = booksMap.get(isbn);
+        if (book == null) {
+            throw new IllegalArgumentException();
+        }
+        return book.isAvailable();
     }
 
     public void setBookAvailability(String isbn, boolean available) {
-        // TODO
+        Book book = booksMap.get(isbn);
+        if (book == null) {
+            throw new IllegalArgumentException();
+        }
+        book.setAvailable(available);
     }
 
     public void addToWaitlist(String isbn, String memberId) {
-        // TODO
+        Book book = booksMap.get(isbn);
+        if (book == null) {
+            throw new IllegalArgumentException();
+        }
+        Member member = memberManager.getMember(memberId);
+        if (member == null) {
+            throw new IllegalArgumentException();
+        }
+        book.addToWaitlist(member);
     }
 
     public Member getNextFromWaitlist(String isbn) {
-        // TODO
-        return null;
+        Book book = booksMap.get(isbn);
+        if (book == null) {
+            throw new IllegalArgumentException();
+        }
+        return book.getNextInWaitlist();
     }
 
     public boolean hasWaitlist(String isbn) {
-        // TODO
-        return false;
+        Book book = booksMap.get(isbn);
+        if (book == null) {
+            throw new IllegalArgumentException();
+        }
+        return book.hasWaitlist();
     }
 }

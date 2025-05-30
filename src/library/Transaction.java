@@ -17,7 +17,6 @@ public class Transaction {
         this.type = type;
     }
 
-    // Getters
     public String getTransactionId() { return transactionId; }
     public String getBookTitle() { return bookTitle; }
     public String getMember() { return memberName; }
